@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<script>
+    let cartCount = 0;
+
+    function addToCart() {
+        cartCount++;
+        alert('Added to Cart. Total items: ' + cartCount);
+    }
+</script>
+
+<body>
+ 
+
+    <header>
+        <h1>Welcome to Not Sorry</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>Our Featured Products</h2>
+        <div class="product">
+            <img src="https://via.placeholder.com/100" alt="Product 1">
+            <h3>Product 1</h3>
+            <p>Price: $10</p>
+            <button onclick="alert('Added to Cart')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/100" alt="Product 2">
+            <h3>Product 2</h3>
+            <p>Price: $15</p>
+            <button onclick="alert('Added to Cart')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/100" alt="Product 3">
+            <h3>Product 3</h3>
+            <p>Price: $19</p>
+            <button onclick="alert('Added to Cart')">Add to Cart</button>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 My Store. All rights reserved.</p>
+    </footer>
+     <!-- JavaScript (add this just before the closing </body> tag) -->
+    <script>
+        let cart = []; // Array to hold products in the cart
+
+        // Function to add product to the cart
+        function addToCart(productName, price) {
+            const productIndex = cart.findIndex(item => item.name === productName);
+
+            if (productIndex !== -1) {
+                cart[productIndex].quantity++;
+            } else {
+                cart.push({
+                    name: productName,
+                    price: price,
+                    quantity: 1
+                });
+            }
+
+            // Save cart to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            updateCartCount();
+            displayCart();
+        }
+
+        // Function to update the cart count in the navigation bar
+        function updateCartCount() {
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = cartCount;
+        }
+
+        // Function to display cart items in the cart section
+        function displayCart() {
+            let cartItems = document.getElementById('cartItems');
+            let cartTotal = document.getElementById('cartTotal');
+
+            // Clear existing cart content
+            cartItems.innerHTML = '';
+            cartTotal.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = 'Your cart is empty.';
+                return;
+            }
+
+            let totalAmount = 0;
+            cart.forEach(item => {
+                cartItems.innerHTML += `
+                    <p>${item.name} x ${item.quantity} - $${item.price * item.quantity}</p>
+                `;
+                totalAmount += item.price * item.quantity;
+            });
+
+            cartTotal.innerHTML = `Total: $${totalAmount}`;
+        }
+
+        // Load cart from localStorage when the page is loaded
+        window.onload = function () {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+                displayCart();
+            }
+        }
+
+        // Checkout button functionality
+        document.getElementById('checkoutButton').onclick = function () {
+            if (cart.length === 0) {
+                alert('Your cart is empty.');
+            } else {
+                alert('Proceeding to checkout...');
+                // You can add a payment gateway here like PayPal or Stripe
+            }
+    </script>
+</body>
+</html>

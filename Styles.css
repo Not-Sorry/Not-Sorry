@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+section {
+    padding: 2rem;
+}
+
+.product {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    text-align: center;
+    width: 200px; /* Makes all products the same size */
+    box-sizing: border-box; /* Includes padding in the width */
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+}
+@media (max-width: 600px) {
+    #home {
+        flex-direction: column; /* Stack products vertically */
+        align-items: center; /* Center products */
+    }
+    .product {
+        width: 100%; /* Make products take up full width on small screens */
+    }
+}
+.product:hover {
+    transform: scale(1.05); /* Slightly zooms in the product */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Adds shadow on hover */
+    transition: all 0.3s ease;
+}
+
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+@media (max-width: 600px) {
+    #home {
+        display: block; /* Stack products vertically on small screens */
+    }
+    
+    .product {
+        width: 100%; /* Make products take up the full width */
+    }
+}
+
